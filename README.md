@@ -67,7 +67,3 @@ python3 main.py
 ## Лицензия
 
 MIT License
-
-## Автор
-
-Developed with Claude Code
