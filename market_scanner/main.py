@@ -10,6 +10,7 @@ import pytz
 
 import config
 from data_loader import get_top_tickers, load_stocks_data
+from universe_loader import load_ticker_list
 from filters import filter_universe
 from strategies import classify_stock
 
@@ -152,7 +153,14 @@ def main():
 
     # Step 1: Load ticker list
     print("\nStep 1: Loading ticker list...")
-    tickers = get_top_tickers(config.TOP_N_STOCKS)
+
+    # Load from file if available
+    tickers = load_ticker_list(config.UNIVERSE_CACHE_FILE)
+
+    if not tickers:
+        print(f"File {config.UNIVERSE_CACHE_FILE} not found, using top {config.TOP_N_STOCKS} stocks")
+        tickers = get_top_tickers(config.TOP_N_STOCKS)
+
     print(f"Loaded {len(tickers)} tickers")
 
     # Step 2: Fetch stock data
